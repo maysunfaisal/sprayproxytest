@@ -2,7 +2,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: sprayproxy
-  namespace: pkumari-tenant
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -13,7 +12,6 @@ rules:
       - "/metrics"
     verbs:
       - get
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -26,7 +24,6 @@ rules:
       - get
       - create
       - delete
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -39,7 +36,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: sprayproxy
-    namespace: pkumari-tenant
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -70,14 +66,11 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: sprayproxy
-    namespace: pkumari-tenant
-
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sprayproxy
-  namespace: pkumari-tenant
   labels:
     app.kubernetes.io/name: sprayproxy
 spec:
@@ -156,12 +149,10 @@ spec:
               cpu: 5m
               memory: 64Mi
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
   name: sprayproxy-service
-  namespace: pkumari-tenant
   annotations:
     service.beta.openshift.io/serving-cert-secret-name: sprayproxy-tls
 spec:
@@ -176,7 +167,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sprayproxy-metrics-service
-  namespace: pkumari-tenant
 spec:
   selector:
     app.kubernetes.io/name: sprayproxy
@@ -185,13 +175,11 @@ spec:
       protocol: TCP
       port: 8443
       targetPort: https
-
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: sprayproxy-route
-  namespace: pkumari-tenant
   annotations:
     haproxy.router.openshift.io/hsts_header: "max-age=63072000"
 spec:
