@@ -1,0 +1,9 @@
+# Copyright © 2023 The Spray Proxy Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+resources:
+  - auth-proxy-client-clusterrole.yaml
+  - auth-proxy-register-clusterrole.yaml
+  - auth-proxy-register-clusterrolebinding.yaml
+  - auth_proxy_role.yaml
+  - auth_proxy_role_binding.yaml
